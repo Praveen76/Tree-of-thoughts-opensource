@@ -18,14 +18,14 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Running on device:", device)
 
 # Loop over each prompting technique and run the experiment for Llama3
-print(f"\nTesting with Mistral backend...\n")
+print(f"\nTesting with GPT4 backend...\n")
 
 for technique in prompting_techniques:
-    print(f"\nRunning experiment with {technique.upper()} prompting technique on Mistral...\n")
+    print(f"\nRunning experiment with {technique.upper()} prompting technique on GPT4...\n")
     
     # Modify the arguments for the current technique and backend
     args = argparse.Namespace(
-        backend='mistral',
+        backend='gpt4',
         temperature=0.3,
         task='game24',
         naive_run=False, 
@@ -39,8 +39,8 @@ for technique in prompting_techniques:
     )
 
     # Run the experiment for a few records
-    for idx in range(1):  # Run for first 2 records as an example
-        print(f"\nProcessing record {idx + 1} with {technique.upper()} prompting on Mistral...\n")
+    for idx in range(2):  # Run for first 2 records as an example
+        print(f"\nProcessing record {idx + 1} with {technique.upper()} prompting on GPT4...\n")
         
         # Retrieve the appropriate prompt template based on the technique
         if technique == 'io':
@@ -55,12 +55,11 @@ for technique in prompting_techniques:
         prompt = prompt_template.format(input=input_numbers)
         print("Prompt:", prompt)
 
-        # Use Llama3 to get output
+        # Use GPT4 to get output
         try:
-            mistral_output = get_model_output(prompt, model_name='mistral', technique=technique)  # Pass technique for accurate response extraction
-            print(f"Mistral output for record {idx + 1}: {mistral_output}")
+            gpt4_output = get_model_output(prompt, model_name='gpt4', technique=technique)  # Pass technique for accurate response extraction
+            print(f"GPT4 output for record {idx + 1}: {gpt4_output}")
         except Exception as e:
             print(f"Error generating output for record {idx + 1}: {e}")
         
-       
-
+    

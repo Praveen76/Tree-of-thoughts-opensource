@@ -62,9 +62,8 @@ for technique in prompting_techniques:
         except Exception as e:
             print(f"Error generating output for record {idx + 1}: {e}")
         
-        # Print GPU memory usage
-        if torch.cuda.is_available():
-            allocated = torch.cuda.memory_allocated(device) / (1024 ** 3)  # Convert to GB
-            reserved = torch.cuda.memory_reserved(device) / (1024 ** 3)    # Convert to GB
-            print(f"GPU memory allocated: {allocated:.2f} GB")
-            print(f"GPU memory reserved: {reserved:.2f} GB")
+        # # Print GPU memory usage
+        # if torch.cuda.is_available():
+        #     allocated = torch.cuda.memory_allocated(device) / (1024 ** 3)  # Convert to GB
+        #     reserved = torch.cuda.memory_reserved(device) / (1024 ** 3)    # Convert to GB
+
