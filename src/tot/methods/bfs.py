@@ -75,8 +75,13 @@ def solve(args, task, idx, to_print=True):
             select_ids = np.random.choice(ids, size=args.n_select_sample, p=ps).tolist()
         elif args.method_select == 'greedy':
             select_ids = sorted(ids, key=lambda x: values[x], reverse=True)[:args.n_select_sample]
-        select_new_ys = [new_ys[select_id] for select_id in select_ids]
-
+        elif args.method_select == 'stochastic_beam':
+            # Stochastic beam selection: sample with replacement and select the best within sampled set
+            beam_candidates = np.random.choice(ids, size=args.n_select_sample * 2, replace=False)  # Expand the beam search candidates
+            # Sort sampled candidates by their values
+            select_ids = sorted(beam_candidates, key=lambda x: values[x], reverse=True)[:args.n_select_sample]
+         
+        select_new_ys = [new_ys[select_id] for select_id in select_ids]   
         # log
         if to_print: 
             sorted_new_ys, sorted_values = zip(*sorted(zip(new_ys, values), key=lambda x: x[1], reverse=True))
